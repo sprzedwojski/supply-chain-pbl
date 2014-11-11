@@ -6,28 +6,28 @@ public abstract class Node {
 	 * Array holding the values of the demand for this node
 	 * for each day of the considered time period.
 	 */
-	private int[] demand;
+	protected int[] demand;
 	
 	/**
 	 * Array holding the stock level for this node
 	 * for each day of the considered time period.
 	 */
-	private int[] stockLevel;
+	protected int[] stockLevel;
 	
 	/**
 	 * The searched optimal value of the stock level (yd).
 	 */
-	private int referenceStockLevel;
+	protected int referenceStockLevel;
 	
 	/**
 	 * The cost of holding an item in the stock (pi h).
 	 */
-	private double holdingCost;
+	protected double holdingCost;
 	
 	/**
 	 * The cost of purchasing (delivery of?) an item (pi p).
 	 */
-	private double purchaseCost;
+	protected double purchaseCost;
 	
 	
 
