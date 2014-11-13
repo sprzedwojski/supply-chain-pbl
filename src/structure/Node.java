@@ -12,12 +12,18 @@ public abstract class Node {
 	 * Array holding the stock level for this node
 	 * for each day of the considered time period.
 	 */
-	protected int[] stockLevel;
+	protected int[] inventoryLevel;
 	
 	/**
 	 * The searched optimal value of the stock level (yd).
 	 */
-	protected int referenceStockLevel;
+	protected int baseStockLevel;
+	
+	/**
+	 * The on-order inventory is the number of units
+	 * that we ordered in previous periods that we have not yet received (omega).
+	 */
+	protected int onOrderInventory;
 	
 	/**
 	 * The cost of holding an item in the stock (pi h).
@@ -39,20 +45,28 @@ public abstract class Node {
 		this.demand = demand;
 	}
 
-	public int[] getStockLevel() {
-		return stockLevel;
+	public int[] getInventoryLevel() {
+		return inventoryLevel;
 	}
 
-	public void setStockLevel(int[] stockLevel) {
-		this.stockLevel = stockLevel;
+	public void setInventoryLevel(int[] inventoryLevel) {
+		this.inventoryLevel = inventoryLevel;
 	}
 
-	public int getReferenceStockLevel() {
-		return referenceStockLevel;
+	public int getBaseStockLevel() {
+		return baseStockLevel;
 	}
 
-	public void setReferenceStockLevel(int referenceStockLevel) {
-		this.referenceStockLevel = referenceStockLevel;
+	public void setBaseStockLevel(int baseStockLevel) {
+		this.baseStockLevel = baseStockLevel;
+	}
+
+	public int getOnOrderInventory() {
+		return onOrderInventory;
+	}
+
+	public void setOnOrderInventory(int onOrderInventory) {
+		this.onOrderInventory = onOrderInventory;
 	}
 
 	public double getHoldingCost() {
