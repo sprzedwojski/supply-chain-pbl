@@ -105,6 +105,10 @@ public abstract class Node{
 		return inventoryLevel[periodIndex];
 	}
 
+	public int[] getInventoryLevel() {
+		return inventoryLevel;
+	}
+	
 //	public void setInventoryLevel(int[] inventoryLevel) {
 //		this.inventoryLevel = inventoryLevel;
 //	}
@@ -120,6 +124,10 @@ public abstract class Node{
 	public int getOnOrderInventory(int periodIndex) {
 		return onOrderInventory[periodIndex];
 	}
+	
+	public int[] getOnOrderInventory() {
+		return onOrderInventory;
+	}	
 
 //	public void setOnOrderInventory(int[] onOrderInventory) {
 //		this.onOrderInventory = onOrderInventory;
@@ -144,6 +152,10 @@ public abstract class Node{
 	public int getOrderHistory(int periodIndex) {
 		return orderHistory[periodIndex];
 	}
+	
+	public int[] getOrderHistory() {
+		return orderHistory;
+	}	
 
 //	public void setOrderHistory(int[] orderHistory) {
 //		this.orderHistory = orderHistory;
