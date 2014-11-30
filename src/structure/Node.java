@@ -1,6 +1,9 @@
 package structure;
 
-public abstract class Node {
+import java.util.ArrayList;
+import java.util.List;
+
+public abstract class Node{
 	
 	/**
 	 * Array holding the values of the demand for this node
@@ -23,7 +26,9 @@ public abstract class Node {
 	 * The on-order inventory is the number of units
 	 * that we ordered in previous periods that we have not yet received (omega).
 	 */
-	protected int onOrderInventory;
+	protected int[] onOrderInventory;
+	
+	protected int[] orderHistory;
 	
 	/**
 	 * The cost of holding an item in the stock (pi h).
@@ -35,8 +40,59 @@ public abstract class Node {
 	 */
 	protected double purchaseCost;
 	
+	protected List<Edge> outgoingEdges = new ArrayList<Edge>();
+	protected List<Edge> incomingEdges = new ArrayList<Edge>();
 	
+	// FIXME simple implementation for 1 incoming node
+	public int calculateInventoryLevel(int periodIndex) {
+		int periodIndexWithDelay = periodIndex - 1 - incomingEdges.get(0).getDelay();
+		int orderHistoryUpTo = (periodIndexWithDelay >= 0) ? orderHistory[periodIndexWithDelay] : 0;
+		
+		
+		inventoryLevel[periodIndex] = periodIndex > 0 ? 
+				inventoryLevel[periodIndex-1] + orderHistoryUpTo - demand[periodIndex-1]
+				: 20; // periodIndex[0] = 20 by default
+		
+		return 0;
+	}
+	
+	// FIXME simple implementation for 1 incoming node
+	public int calculateOrderAmount(int periodIndex) {
+		int orderAmount = baseStockLevel - inventoryLevel[periodIndex] - onOrderInventory[periodIndex];
+		
+		orderHistory[periodIndex] = orderAmount;
+		
+		return orderAmount;
+	}
+	
+	// FIXME simple implementation for 1 incoming node
+	public int calculateOnOrderInventory(int periodIndex) {
+		Edge edge = incomingEdges.get(0);
+		int diff = periodIndex - edge.getDelay();
+		int startIndex = diff > 0 ? diff : 0;
+		
+		int sum = 0;
+		
+		for(int i=startIndex; i<periodIndex; i++) {
+			sum += orderHistory[i] * edge.getFraction();
+		}
+		
+		onOrderInventory[periodIndex] = sum;
+		
+		return sum;
+	}
+	
+	
+	// Getters and setters
 
+	public void addOutgoingEdge(Edge edge) {
+		outgoingEdges.add(edge);
+	}
+	
+	public void addIncomingEdge(Edge edge) {
+		incomingEdges.add(edge);
+	}
+	
 	public int[] getDemand() {
 		return demand;
 	}
@@ -45,13 +101,13 @@ public abstract class Node {
 		this.demand = demand;
 	}
 
-	public int[] getInventoryLevel() {
-		return inventoryLevel;
+	public int getInventoryLevel(int periodIndex) {
+		return inventoryLevel[periodIndex];
 	}
 
-	public void setInventoryLevel(int[] inventoryLevel) {
-		this.inventoryLevel = inventoryLevel;
-	}
+//	public void setInventoryLevel(int[] inventoryLevel) {
+//		this.inventoryLevel = inventoryLevel;
+//	}
 
 	public int getBaseStockLevel() {
 		return baseStockLevel;
@@ -61,13 +117,13 @@ public abstract class Node {
 		this.baseStockLevel = baseStockLevel;
 	}
 
-	public int getOnOrderInventory() {
-		return onOrderInventory;
+	public int getOnOrderInventory(int periodIndex) {
+		return onOrderInventory[periodIndex];
 	}
 
-	public void setOnOrderInventory(int onOrderInventory) {
-		this.onOrderInventory = onOrderInventory;
-	}
+//	public void setOnOrderInventory(int[] onOrderInventory) {
+//		this.onOrderInventory = onOrderInventory;
+//	}
 
 	public double getHoldingCost() {
 		return holdingCost;
@@ -84,6 +140,14 @@ public abstract class Node {
 	public void setPurchaseCost(double purchaseCost) {
 		this.purchaseCost = purchaseCost;
 	}
+
+	public int getOrderHistory(int periodIndex) {
+		return orderHistory[periodIndex];
+	}
+
+//	public void setOrderHistory(int[] orderHistory) {
+//		this.orderHistory = orderHistory;
+//	}
 	
 	
 }
