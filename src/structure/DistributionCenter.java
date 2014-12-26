@@ -6,13 +6,17 @@ public class DistributionCenter extends Node{
 		
 	}
 
-	public DistributionCenter(int[] demand, int[] inventoryLevel, int baseStockLevel,
+	public DistributionCenter(int[] demand, int baseStockLevel,
 			double holdingCost, double purchaseCost) {
+		super();
 		this.demand = demand;
-		this.inventoryLevel = inventoryLevel;
 		this.baseStockLevel = baseStockLevel;
 		this.holdingCost = holdingCost;
 		this.purchaseCost = purchaseCost;
+		
+		inventoryLevel = new int[demand.length];
+		onOrderInventory = new int[demand.length];
+		orderHistory = new int[demand.length];
 	}
 	
 }
