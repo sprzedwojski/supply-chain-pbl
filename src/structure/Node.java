@@ -45,6 +45,8 @@ public abstract class Node {
     protected double costFunction;
 
 
+    protected int initialStockLevel;
+
     protected List<Edge> outgoingEdges = new ArrayList<Edge>();
     protected List<Edge> incomingEdges = new ArrayList<Edge>();
 
@@ -52,9 +54,14 @@ public abstract class Node {
     public int calculateInventoryLevel(int periodIndex) {
         int incomingOrders = getAllIncomingOrders(periodIndex);
         int outgoingOrders = getAllOutgoingOrders(periodIndex);
-        inventoryLevel[periodIndex] = periodIndex > 0 ?
-                inventoryLevel[periodIndex - 1] + incomingOrders - outgoingOrders - demand[periodIndex - 1]
-                : 151; // periodIndex[0] = 20 by default
+        if( periodIndex > 0){
+            int singleDemand = demand == null? 0 : demand[periodIndex - 1];
+            inventoryLevel[periodIndex] = inventoryLevel[periodIndex - 1] + incomingOrders - outgoingOrders - singleDemand; // periodIndex[0] = 20 by default
+        }
+        else{
+            inventoryLevel[periodIndex] = initialStockLevel;
+        }
+
 
         return 0;
     }
@@ -62,7 +69,7 @@ public abstract class Node {
     private int getAllIncomingOrders(int periodIndex) {
         int incomingOrders = 0;
         for (Edge edge : incomingEdges) {
-            int periodIndexWithDelay = periodIndex-1  - edge.getDelay();
+            int periodIndexWithDelay = periodIndex - 1 - edge.getDelay();
             incomingOrders += (periodIndexWithDelay >= 0) ? edge.getFraction() * orderHistory[periodIndexWithDelay] : 0;
         }
         return incomingOrders;
@@ -70,9 +77,11 @@ public abstract class Node {
 
     private int getAllOutgoingOrders(int periodIndex) {
         int outgoingOrders = 0;
-        for (Edge edge : outgoingEdges) {
+        if (periodIndex - 1 >= 0) {
+            for (Edge edge : outgoingEdges) {
 
-            outgoingOrders += edge.getFraction() * edge.getReceiver().getOrderHistory()[periodIndex];
+                outgoingOrders += edge.getFraction() * edge.getReceiver().getOrderHistory()[periodIndex - 1];
+            }
         }
         return outgoingOrders;
     }
@@ -80,7 +89,7 @@ public abstract class Node {
 
     public int calculateOrderAmount(int periodIndex) {
         int orderAmount = baseStockLevel - inventoryLevel[periodIndex] - onOrderInventory[periodIndex];
-        orderAmount = orderAmount<0? 0: orderAmount;
+        orderAmount = orderAmount < 0 ? 0 : orderAmount;
         orderHistory[periodIndex] = orderAmount;
 
         return orderAmount;
@@ -102,14 +111,27 @@ public abstract class Node {
         return sum;
     }
 
-    public void calculateCostFunction() {
+    /*TODO set purchase cost for edge not for node */
+    public double calculateCostFunction() {
+
         double cost = 0;
         for (int i = 0; i < inventoryLevel.length; i++) {
-            cost += holdingCost * inventoryLevel[i] + purchaseCost * orderHistory[i];
+
+            cost += (inventoryLevel[i]<0? 0: holdingCost * inventoryLevel[i]) + purchaseCost * orderHistory[i];
         }
+
         costFunction = cost;
+        return costFunction;
     }
+
     // Getters and setters
+    public int getInitialStockLevel() {
+        return initialStockLevel;
+    }
+
+    public void setInitialStockLevel(int initialStockLevel) {
+        this.initialStockLevel = initialStockLevel;
+    }
 
     public void addOutgoingEdge(Edge edge) {
         outgoingEdges.add(edge);
