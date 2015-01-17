@@ -14,10 +14,10 @@ public class Population {
 
     }
 
-    public Population(int populationSize, Node[] nodes) {
+    public Population(int populationSize, Node[] nodes, int numOfBits) {
         solutions = new Chromosome[populationSize];
 
-        initPopulation(nodes);
+        initPopulation(nodes, numOfBits);
     }
 
     public Population(int populationSize) {
@@ -27,12 +27,11 @@ public class Population {
     //init population
     //set initial genes
 
-    private void initPopulation(Node[] nodes) {
+    private void initPopulation(Node[] nodes, int numofBits) {
         for (int i = 0; i < solutions.length; i++) {
-
-
+            System.out.println("chromosome "+i);
             Chromosome chromosome = new Chromosome();
-            chromosome.generateGenes(nodes);
+            chromosome.generateGenes(nodes, numofBits);
             solutions[i] = chromosome;
         }
     }
@@ -114,9 +113,12 @@ public class Population {
     }
 
     private void calculateChromosomesFitnessFunction(int demandTimePeriod) {
+
         for (Chromosome solution : solutions) {
+
             solution.inventoryCalculation(demandTimePeriod);
             solution.calculateFittnessFunction();
+
         }
     }
 }

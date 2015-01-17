@@ -8,24 +8,38 @@ import structure.Node;
 public class Gene {
 
     private Node node;
-    private int value;
+    private byte[] gene;
     public Gene(){
 
     }
 
-    public Gene(int value, Node node) {
+    public Gene(byte[] gene, Node node) {
 
         this.node = node;
-        this.value = value;
+        this.gene = gene;
+
+    }
+    public Gene(int numOfBits, Node node) {
+
+        this.node = node;
+        gene = new byte[numOfBits];
+        for (int j = 0; j < gene.length; j++) {
+            byte singleGene = (byte) Math.round(Math.random());
+            gene[j] = singleGene;
+
+        }
 
     }
 
-    public int getValue() {
-        return this.value;
+    public void setGene(byte[] gene) {
+        this.gene = gene;
     }
 
-    public void setValue(int value) {
-        this.value = value;
+    public byte[] getGene() {
+        return gene;
+    }
+    public int getGeneIntValue() {
+        return BitIntConversion.binaryToInt(gene);
     }
 
     public Node getNode() {
@@ -36,7 +50,10 @@ public class Gene {
         this.node = node;
     }
     public void setBaseStockLevel(){
-        this.node.setBaseStockLevel(value);
+       int baseStockLevel = BitIntConversion.binaryToInt(gene);
+        System.out.println("Base stock Level "+baseStockLevel);
+        this.node.setBaseStockLevel(baseStockLevel);
+
     }
     public void performPeriodCalc(int currentTime){
 

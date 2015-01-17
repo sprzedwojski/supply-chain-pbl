@@ -77,14 +77,10 @@ public class Chromosome {
     }
 
 
-    public void generateGenes(Node[] nodes) {
+    public void generateGenes(Node[] nodes, int numberOfBits) {
         genes = new Gene[nodes.length];
-        Random generator = new Random();
-
         for (int j = 0; j < nodes.length; j++) {
-            int number = generator.nextInt(100);
-
-            Gene gene = new Gene(number, nodes[j]);
+            Gene gene = new Gene(numberOfBits, nodes[j]);
             genes[j] = gene;
 
         }
@@ -102,7 +98,9 @@ public class Chromosome {
     }
 
     public void inventoryCalculation(int demandPeriodLength) {
+        System.out.println(genes.length);
         for (int singleGene = 0; singleGene < genes.length; singleGene++) {
+            System.out.println(singleGene);
             genes[singleGene].setBaseStockLevel();
         }
         for (int time = 0; time < demandPeriodLength; time++) {

@@ -23,7 +23,7 @@ public class Simulator {
         DistributionCenter cd1 = null;
         try {
             Node[] nodes = new Node[2];
-            cd1 = new DistributionCenter(demand, 56,100, 1, 2, demand.length);
+            cd1 = new DistributionCenter(demand, 56,100, 10, 30, demand.length);
             DistributionCenter cd2 = new DistributionCenter(34, 25, 2, 5, demand.length);
 
             Edge edge21 = new Edge(0.6, 2, cd2, cd1);
@@ -37,7 +37,8 @@ public class Simulator {
             cd2.addOutgoingEdge(edge21);
             nodes[0]=cd1;
             nodes[1]=cd2;
-            GA ga = new GA(100, nodes, demand.length);
+
+           GA ga = new GA(200, nodes, demand.length,100);
             ga.runGA();
         /*    for (int i = 0; i < demand.length; i++) {
 
