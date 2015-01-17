@@ -8,7 +8,8 @@ public class DistributionCenter extends Node {
     }
 
     public DistributionCenter(int[] demand, int baseStockLevel, int initialStockLevel,
-                              double holdingCost, double purchaseCost, int periodLength) throws Exception {
+                              double holdingCost, double purchaseCost, double negativeStockLevelCost,
+                              int periodLength) throws Exception {
         super();
         if (demand.length != periodLength) {
             throw new Exception();
@@ -26,8 +27,8 @@ public class DistributionCenter extends Node {
 
     }
 
-    public DistributionCenter( int baseStockLevel, int initialStockLevel,
-                              double holdingCost, double purchaseCost,int periodLength) {
+    public DistributionCenter( int baseStockLevel, int initialStockLevel, double holdingCost, 
+    		double purchaseCost, double negativeStockLevelCost, int periodLength) {
         super();
         this.initialStockLevel = initialStockLevel;
         this.baseStockLevel = baseStockLevel;

@@ -42,6 +42,12 @@ public abstract class Node {
      * The cost of purchasing (delivery of?) an item (pi p).
      */
     protected double purchaseCost;
+    
+    /**
+     * The cost of having negative stock level (for each unit of the product).
+     */
+    protected double negativeStockLevelCost;
+    
     protected double costFunction;
 
 
@@ -117,7 +123,10 @@ public abstract class Node {
         double cost = 0;
         for (int i = 0; i < inventoryLevel.length; i++) {
 
-            cost += (inventoryLevel[i]<0? 0: holdingCost * inventoryLevel[i]) + purchaseCost * orderHistory[i];
+            cost += ( inventoryLevel[i]<0 ? 
+            		negativeStockLevelCost * Math.abs(inventoryLevel[i]) //the cost is increased, so we take abs() from the negative stock
+            		: holdingCost * inventoryLevel[i]) 
+            		+ purchaseCost * orderHistory[i];
         }
 
         costFunction = cost;
@@ -211,6 +220,14 @@ public abstract class Node {
 //	public void setOrderHistory(int[] orderHistory) {
 //		this.orderHistory = orderHistory;
 //	}
+
+	public double getNegativeStockLevelCost() {
+		return negativeStockLevelCost;
+	}
+
+	public void setNegativeStockLevelCost(double negativeStockLevelCost) {
+		this.negativeStockLevelCost = negativeStockLevelCost;
+	}
 
 
 }
