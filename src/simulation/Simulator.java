@@ -23,8 +23,8 @@ public class Simulator {
         DistributionCenter cd1 = null;
         try {
             Node[] nodes = new Node[2];
-            cd1 = new DistributionCenter(demand, 56,100, 10, 30, 20, demand.length);
-            DistributionCenter cd2 = new DistributionCenter(34, 25, 2, 5, 10, demand.length);
+            cd1 = new DistributionCenter(demand, 56,100, 10, 30, 20, demand.length+1);
+            DistributionCenter cd2 = new DistributionCenter(34, 25, 2, 5, 10, demand.length+1);
 
             Edge edge21 = new Edge(0.6, 2, cd2, cd1);
 

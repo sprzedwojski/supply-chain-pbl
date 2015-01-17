@@ -7,13 +7,24 @@ public class DistributionCenter extends Node {
 
     }
 
+    /**
+     * 
+     * @param demand
+     * @param baseStockLevel
+     * @param initialStockLevel
+     * @param holdingCost
+     * @param purchaseCost
+     * @param negativeStockLevelCost
+     * @param periodLength Musi być równy: demand.length+1 (do sprawdzania po stronie GUI)
+     * @throws Exception
+     */
     public DistributionCenter(int[] demand, int baseStockLevel, int initialStockLevel,
                               double holdingCost, double purchaseCost, double negativeStockLevelCost,
                               int periodLength) throws Exception {
         super();
-        if (demand.length != periodLength) {
-            throw new Exception();
-        }
+//        if (demand.length+1 != periodLength) {
+//            throw new Exception();
+//        }
         this.initialStockLevel = initialStockLevel;
 
         this.demand = demand;
@@ -21,9 +32,9 @@ public class DistributionCenter extends Node {
         this.holdingCost = holdingCost;
         this.purchaseCost = purchaseCost;
 
-        inventoryLevel = new int[demand.length];
-        onOrderInventory = new int[demand.length];
-        orderHistory = new int[demand.length];
+        inventoryLevel = new int[periodLength];
+        onOrderInventory = new int[periodLength];
+        orderHistory = new int[periodLength];
 
     }
 
