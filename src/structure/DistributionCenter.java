@@ -31,7 +31,7 @@ public class DistributionCenter extends Node {
         this.baseStockLevel = baseStockLevel;
         this.holdingCost = holdingCost;
         this.purchaseCost = purchaseCost;
-
+        this.negativeStockLevelCost = negativeStockLevelCost;
         inventoryLevel = new int[periodLength];
         onOrderInventory = new int[periodLength];
         orderHistory = new int[periodLength];
@@ -45,7 +45,7 @@ public class DistributionCenter extends Node {
         this.baseStockLevel = baseStockLevel;
         this.holdingCost = holdingCost;
         this.purchaseCost = purchaseCost;
-
+        this.negativeStockLevelCost = negativeStockLevelCost;
         inventoryLevel = new int[periodLength];
         onOrderInventory = new int[periodLength];
         orderHistory = new int[periodLength];

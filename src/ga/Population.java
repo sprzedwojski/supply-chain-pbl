@@ -29,7 +29,7 @@ public class Population {
 
     private void initPopulation(Node[] nodes, int numofBits) {
         for (int i = 0; i < solutions.length; i++) {
-            System.out.println("chromosome "+i);
+
             Chromosome chromosome = new Chromosome();
             chromosome.generateGenes(nodes, numofBits);
             solutions[i] = chromosome;
@@ -73,21 +73,21 @@ public class Population {
         this.overallFitnessFunction = 0;
         int i = 0;
         for (Chromosome solution : solutions) {
-            System.out.println(i + "fitness " + 1.0 / solution.getFitnessFunctionResult());
-            i++;
+
+
             this.overallFitnessFunction += solution.getFitnessFunctionResult();
         }
-        System.out.println("\n");
+
     }
 
     /**
      * Set selection probability for all chromosomes in population
      */
     private void setSelectionProbabilityOfChromosomes() {
-        int i = 0;
+
         for (Chromosome solution : solutions) {
-            i++;
-            // System.out.println(i);
+
+
             solution.calculateSelectionProbality(overallFitnessFunction);
         }
     }

@@ -89,18 +89,18 @@ public class Chromosome {
     public void calculateFittnessFunction() {
         double totalCostFunction = 0;
         for (int singleGene = 0; singleGene < genes.length; singleGene++) {
-          //  System.out.print(genes[singleGene].getValue() + " value ");
+
             totalCostFunction += genes[singleGene].getCostFunction();
-           // System.out.print(genes[singleGene].getCostFunction()+" cost single\n ");
+
         }
         fitnessFunctionResult = 1.0/totalCostFunction;
-       // System.out.print("\n ");
+
     }
 
     public void inventoryCalculation(int demandPeriodLength) {
-        System.out.println(genes.length);
+
         for (int singleGene = 0; singleGene < genes.length; singleGene++) {
-            System.out.println(singleGene);
+
             genes[singleGene].setBaseStockLevel();
         }
         for (int time = 0; time < demandPeriodLength; time++) {

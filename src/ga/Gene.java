@@ -51,7 +51,7 @@ public class Gene {
     }
     public void setBaseStockLevel(){
        int baseStockLevel = BitIntConversion.binaryToInt(gene);
-        System.out.println("Base stock Level "+baseStockLevel);
+
         this.node.setBaseStockLevel(baseStockLevel);
 
     }
@@ -66,8 +66,7 @@ public class Gene {
 
     public double getCostFunction(){
         return this.node.calculateCostFunction();
-        //System.out.println("end");
-        //return this.node.getCostFunction();
+
     }
 
 
