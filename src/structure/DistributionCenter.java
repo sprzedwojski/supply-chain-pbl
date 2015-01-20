@@ -20,9 +20,9 @@ public class DistributionCenter extends Node {
         this.holdingCost = holdingCost;
         this.purchaseCost = purchaseCost;
 
-        inventoryLevel = new int[demand.length];
-        onOrderInventory = new int[demand.length];
-        orderHistory = new int[demand.length];
+        inventoryLevel = new int[demand.length+1];
+        onOrderInventory = new int[demand.length+1];
+        orderHistory = new int[demand.length+1];
 
     }
 
@@ -34,9 +34,9 @@ public class DistributionCenter extends Node {
         this.holdingCost = holdingCost;
         this.purchaseCost = purchaseCost;
 
-        inventoryLevel = new int[periodLength];
-        onOrderInventory = new int[periodLength];
-        orderHistory = new int[periodLength];
+        inventoryLevel = new int[periodLength+1];
+        onOrderInventory = new int[periodLength+1];
+        orderHistory = new int[periodLength+1];
     }
 
 }

@@ -55,7 +55,9 @@ public abstract class Node {
         int incomingOrders = getAllIncomingOrders(periodIndex);
         int outgoingOrders = getAllOutgoingOrders(periodIndex);
         if( periodIndex > 0){
+
             int singleDemand = demand == null? 0 : demand[periodIndex - 1];
+            System.out.println(singleDemand);
             inventoryLevel[periodIndex] = inventoryLevel[periodIndex - 1] + incomingOrders - outgoingOrders - singleDemand; // periodIndex[0] = 20 by default
         }
         else{
@@ -117,7 +119,7 @@ public abstract class Node {
         double cost = 0;
         for (int i = 0; i < inventoryLevel.length; i++) {
 
-            cost += (inventoryLevel[i]<0? 0: holdingCost * inventoryLevel[i]) + purchaseCost * orderHistory[i];
+            cost += (inventoryLevel[i]<0? 50* Math.abs(inventoryLevel[i]): holdingCost * inventoryLevel[i]) + purchaseCost * orderHistory[i];
         }
 
         costFunction = cost;

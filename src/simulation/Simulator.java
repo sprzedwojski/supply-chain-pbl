@@ -18,17 +18,17 @@ public class Simulator {
 
         //int[] demand = {10, 5, 15, 20, 45, 10, 5, 10, 50, 35, 20, 10, 5, 3, 14, 17, 29, 0, 5, 3, 18, 46, 12};
         //int[] demand = {30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30};
-        int[] demand = {5, 5, 10, 10, 15, 15, 20, 20, 10};
+        int[] demand = {5, 5, 10, 10, 15, 15, 20, 20, 30, 30, 40, 50, 20, 10, 5};
 
         DistributionCenter cd1 = null;
         try {
             Node[] nodes = new Node[2];
-            cd1 = new DistributionCenter(demand, 56,100, 10, 30, demand.length);
-            DistributionCenter cd2 = new DistributionCenter(34, 25, 2, 5, demand.length);
+            cd1 = new DistributionCenter(demand, 70,0, 10, 30, demand.length);
+            DistributionCenter cd2 = new DistributionCenter(69, 0, 2, 5, demand.length);
 
             Edge edge21 = new Edge(0.6, 2, cd2, cd1);
 
-            Edge edgeExt2 = new Edge(1, 3, null, cd2);
+            Edge edgeExt2 = new Edge(1, 2, null, cd2);
             Edge edgeExt1 = new Edge(0.4, 1, null, cd1);
             cd1.addIncomingEdge(edge21);
             cd1.addIncomingEdge(edgeExt1);
@@ -38,9 +38,9 @@ public class Simulator {
             nodes[0]=cd1;
             nodes[1]=cd2;
 
-           GA ga = new GA(200, nodes, demand.length,100);
-            ga.runGA();
-        /*    for (int i = 0; i < demand.length; i++) {
+      //     GA ga = new GA(200, nodes, demand.length,500);
+         //   ga.runGA();
+           /*for (int i = 0; i <= demand.length; i++) {
 
                 cd1.calculateInventoryLevel(i);
                 cd1.calculateOnOrderInventory(i);

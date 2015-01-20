@@ -9,8 +9,8 @@ import java.util.Random;
  */
 public class GA {
 
-    private double mutationProbability = 0.2;
-    private double crossingProbability = 0.4;
+    private double mutationProbability = 0.3;
+    private double crossingProbability = 0.2;
     private Chromosome[] newSolutions;
     private int populationSize;
     private Population currentPopulation, nextPopulation;
