@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<connections>
+    <connection>
+        <startpoint>2</startpoint>
+        <endpoint>1</endpoint>
+        <direction>1</direction>
+        <fraction>0.6</fraction>
+        <delay>2</delay>
+        <external>false</external>
+    </connection>
+    <connection>
+        <startpoint>0</startpoint>
+        <endpoint>1</endpoint>
+        <direction>1</direction>
+        <fraction>0.4</fraction>
+        <delay>1</delay>
+        <external>true</external>
+    </connection>
+    <connection>
+        <startpoint>0</startpoint>
+        <endpoint>2</endpoint>
+        <direction>2</direction>
+        <fraction>1.0</fraction>
+        <delay>3</delay>
+        <external>true</external>
+    </connection>
+</connections>
