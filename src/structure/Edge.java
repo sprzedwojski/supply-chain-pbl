@@ -2,6 +2,8 @@ package structure;
 
 public class Edge {
 
+	private int id;
+	
     /**
      * Part of the order of the receiving Node that
      * is delivered by this edge (lambda).
@@ -63,5 +65,13 @@ public class Edge {
     public void setReceiver(Node receiver) {
         this.receiver = receiver;
     }
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 }

@@ -23,9 +23,9 @@ public class Simulator {
         //int[] demand = {30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30};
         //int[] demand = {5, 5, 10, 10, 15, 15, 20, 20, 30, 30, 40, 50, 20, 10, 5};
 
-        DistributionCenter cd1 = null;
+        //DistributionCenter cd1 = null;
         try {
-            Node[] nodes = new Node[2];
+            //Node[] nodes = new Node[2];
             /*cd1 = new DistributionCenter(demand, 150, 150, 10, 30, 100, demand.length + 1);
             DistributionCenter cd2 = new DistributionCenter(150, 150, 2, 5, 50, demand.length + 1);
 
@@ -39,37 +39,58 @@ public class Simulator {
             cd2.addIncomingEdge(edgeExt2);
             cd2.addOutgoingEdge(edge21);
             nodes[0] = cd1;
-            nodes[1] = cd2;*/
-
+            nodes[1] = cd2;
+*/
             //Creating adapter
             Adapter ad = new Adapter();
             //Taking converted node list from the adapter
-            List<DistributionCenter> DCs = ad.ConvertNodes();
+            List<DistributionCenter> DCs = ad.ConvertNodes(args[0] != null ? args[0] : "nodes.xml");
             //Setting nodes
-            cd1 = DCs.get(1);
-            DistributionCenter cd2 = DCs.get(2);
+            //cd1 = DCs.get(0);
+            //DistributionCenter cd2 = DCs.get(1);
+            
+            
+            // FIXME temporary
+            int k=1;
+            for(DistributionCenter dc : DCs) {
+            	dc.setId(k);
+            	k++;
+            }
             
             //taking converted edges list from the adapter
-            List<Edge> Edges = ad.ConvertConnections();
-            cd1.addIncomingEdge(Edges.get(0));
+            List<Edge> Edges = ad.ConvertConnections(args[1] != null ? args[1] : "connections.xml");
+            
+            for(Edge e : Edges) {
+            	if(e.getReceiver() != null) {
+            		DCs.get(e.getReceiver().getId() - 1).addIncomingEdge(e);
+            	}
+            	if(e.getSender() != null) {
+            		DCs.get(e.getSender().getId() - 1).addOutgoingEdge(e);
+            	}
+            }
+            
+            /*cd1.addIncomingEdge(Edges.get(0));
             cd1.addIncomingEdge(Edges.get(1));
             cd2.addIncomingEdge(Edges.get(2));
             cd2.addOutgoingEdge(Edges.get(0));
             nodes[0]=cd1;
-            nodes[1]=cd2;
+            nodes[1]=cd2;*/
             
             //int[] demand = null;
             int periodLength = 0;
             
             for(DistributionCenter dc : DCs) {
             	if(dc.getDemand() != null) {
-            		periodLength = dc.getDemand().length;
+            		periodLength = dc.getDemand().length+1;
             		break;
             	}
             }
             
+            Node[] nodes = DCs.toArray(new Node[0]);
+            
             GA ga = new GA(200, nodes, periodLength, 300);
             ga.runGA();
+            
             int[] solutions = ga.getBestSolution();
             for (int i = 0; i < nodes.length; i++) {
                 nodes[i].setBaseStockLevel(solutions[i]);
@@ -85,19 +106,42 @@ public class Simulator {
                     System.out.println(i + ": order amount " + nodes[j].getOrderHistory(i) + "\n");
                 }
             }
-            cd1.calculateCostFunction();
-            cd2.calculateCostFunction();
-            double c = cd1.getCostFunction() + cd2.getCostFunction();
+            
+            double totalCost = 0.0;
+            
+            System.out.println("--------------");
+            
+            for(Node node : nodes) {
+            	node.calculateCostFunction();
+            	totalCost += node.getCostFunction();
+            	
+            	System.out.println(node.getBaseStockLevel());
+            }
+            
+            System.out.println("--------------");
+            
+            totalCost /= nodes.length;
+            
+            //cd1.calculateCostFunction();
+            //cd2.calculateCostFunction();
+            //double c = cd1.getCostFunction() + cd2.getCostFunction();
             
             //In case of saving modified nodes, re-setting nodes.
-            DCs.set(1, cd1);
-            DCs.set(2, cd2);
+            //DCs.set(0, cd1);
+            //DCs.set(1, cd2);
             //Saving calculated nodes.
-            ad.ConvertBackendNodes();
+            //ad.ConvertBackendNodes();
             
-            System.out.println("cost function: " + c);
+            System.out.println("total cost: " + totalCost);
             
-            Plotter p1 = new Plotter();
+            for(Node node : nodes) {
+                Plotter p = new Plotter();
+                p.plotPointsWithIntegerXFromZero(node.getInventoryLevel(), "Inventory level y(k)");
+                p.plotPointsWithIntegerXFromZero(node.getOrderHistory(), "Order history u(k)");
+                p.draw("Node " + node.getId());
+            }
+            
+            /*Plotter p1 = new Plotter();
             p1.plotPointsWithIntegerXFromZero(cd1.getInventoryLevel(), "Inventory level y(k)");
             p1.plotPointsWithIntegerXFromZero(cd1.getOrderHistory(), "Order history u(k)");
             p1.draw("Node 1");
@@ -105,7 +149,7 @@ public class Simulator {
             Plotter p2 = new Plotter();
             p2.plotPointsWithIntegerXFromZero(cd2.getInventoryLevel(), "Inventory level y(k)");
             p2.plotPointsWithIntegerXFromZero(cd2.getOrderHistory(), "Order history u(k)");
-            p2.draw("Node 2");
+            p2.draw("Node 2");*/
 
         } catch (Exception e) {
             e.printStackTrace();

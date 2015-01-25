@@ -23,10 +23,10 @@ public class Adapter {
 	 * nodes and converts it to Back-end nodes. MaxDemand is calculatefd by
 	 * simple min/max function, and then used in DistributionCenter constructor.
 	 */
-	public List<DistributionCenter> ConvertNodes() throws Exception {
+	public List<DistributionCenter> ConvertNodes(String nodesXmlFilename) throws Exception {
 		// Importing FrontNodes list
 		try {
-			NodeList = JAXBXMLHandler.unmarshalNode(new File("nodes.xml"));
+			NodeList = JAXBXMLHandler.unmarshalNode(new File(nodesXmlFilename));
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}
@@ -83,13 +83,13 @@ public class Adapter {
 	 * This method works the same as ConvertNodes, but in this case we are
 	 * working on connections.
 	 */
-	public List<Edge> ConvertConnections() {
+	public List<Edge> ConvertConnections(String connectionsXmlFilename) {
 
 		List<Edge> Edges = new ArrayList<Edge>();
 		List<Connection> ConnectionList = new ArrayList<Connection>();
 		try {
 			ConnectionList = JAXBXMLHandler.unmarshalConnection(new File(
-					"connections.xml"));
+					connectionsXmlFilename));
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}

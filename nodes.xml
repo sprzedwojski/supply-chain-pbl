@@ -1,22 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <nodes>
     <node>
-        <name>external</name>
-        <type>0</type>
-        <id>0</id>
-        <periodLength>0</periodLength>
-        <baseStockLevel>0</baseStockLevel>
-        <holdingCost>0.0</holdingCost>
-        <purchaseCost>0.0</purchaseCost>
-        <negativeStockLevelCost>0.0</negativeStockLevelCost>
-        <costFunction>0.0</costFunction>
-        <initialStockLevel>0</initialStockLevel>
-    </node>
-    <node>
         <name>cd1</name>
         <type>1</type>
         <id>1</id>
-        <periodLength>10</periodLength>
+        <periodLength>16</periodLength>
         <demand>5</demand>
         <demand>5</demand>
         <demand>10</demand>
@@ -25,7 +13,13 @@
         <demand>15</demand>
         <demand>20</demand>
         <demand>20</demand>
+        <demand>30</demand>
+        <demand>30</demand>
+        <demand>40</demand>
+        <demand>50</demand>
+        <demand>20</demand>
         <demand>10</demand>
+        <demand>5</demand>
         <inventoryLevel>0</inventoryLevel>
         <inventoryLevel>0</inventoryLevel>
         <inventoryLevel>0</inventoryLevel>
@@ -36,7 +30,7 @@
         <inventoryLevel>0</inventoryLevel>
         <inventoryLevel>0</inventoryLevel>
         <inventoryLevel>0</inventoryLevel>
-        <baseStockLevel>56</baseStockLevel>
+        <baseStockLevel>150</baseStockLevel>
         <onOrderInventory>0</onOrderInventory>
         <onOrderInventory>0</onOrderInventory>
         <onOrderInventory>0</onOrderInventory>
@@ -59,15 +53,15 @@
         <orderHistory>0</orderHistory>
         <holdingCost>10.0</holdingCost>
         <purchaseCost>30.0</purchaseCost>
-        <negativeStockLevelCost>0.0</negativeStockLevelCost>
+        <negativeStockLevelCost>100.0</negativeStockLevelCost>
         <costFunction>0.0</costFunction>
-        <initialStockLevel>100</initialStockLevel>
+        <initialStockLevel>150</initialStockLevel>
     </node>
     <node>
         <name>cd2</name>
         <type>1</type>
         <id>2</id>
-        <periodLength>0</periodLength>
+        <periodLength>16</periodLength>
         <inventoryLevel>0</inventoryLevel>
         <inventoryLevel>0</inventoryLevel>
         <inventoryLevel>0</inventoryLevel>
@@ -78,7 +72,7 @@
         <inventoryLevel>0</inventoryLevel>
         <inventoryLevel>0</inventoryLevel>
         <inventoryLevel>0</inventoryLevel>
-        <baseStockLevel>34</baseStockLevel>
+        <baseStockLevel>150</baseStockLevel>
         <onOrderInventory>0</onOrderInventory>
         <onOrderInventory>0</onOrderInventory>
         <onOrderInventory>0</onOrderInventory>
@@ -101,7 +95,7 @@
         <orderHistory>0</orderHistory>
         <holdingCost>2.0</holdingCost>
         <purchaseCost>5.0</purchaseCost>
-        <negativeStockLevelCost>0.0</negativeStockLevelCost>
+        <negativeStockLevelCost>50.0</negativeStockLevelCost>
         <costFunction>0.0</costFunction>
         <initialStockLevel>25</initialStockLevel>
     </node>
