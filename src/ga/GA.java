@@ -2,6 +2,8 @@ package ga;
 
 import structure.Node;
 
+import java.util.ArrayList;
+
 /**
  * Created by Marta on 2015-01-10.
  */
@@ -15,7 +17,7 @@ public class GA {
     public Node[] nodes;
     public int demandPeriodLength;
     private Chromosome bestSolution;
-
+    private ArrayList<Chromosome> bestSolutions;
 
     public GA(int populationSize, Node[] nodes, int demandPeriodLength, int intervalEnd) {
         this.populationSize = populationSize;
@@ -33,20 +35,31 @@ public class GA {
 
     public void runGA() {
         int count = 0;
+        bestSolutions = new ArrayList<Chromosome>();
         double averageFFDiff = Double.POSITIVE_INFINITY;
         double averageFFCurrent = Double.POSITIVE_INFINITY;
         double averageFFPrevious = Double.NEGATIVE_INFINITY;
-        while (Math.abs(averageFFPrevious-averageFFCurrent) >0.001) {
+        while (count < 1000) {
             averageFFPrevious = averageFFCurrent;
             algorithm();
-            averageFFCurrent=getAverage();
+            averageFFCurrent = getAverage();
             count++;
             getBestFit();
-           System.out.println(count+" "+Math.abs(averageFFPrevious-averageFFCurrent));
+           // calculateVariance(averageFFCurrent);
+            double out = (1d/bestSolution.getFitnessFunctionResult())/averageFFCurrent;
+            System.out.print(count + " "+(1d/bestSolution.getFitnessFunctionResult())+ " "+out+ "\n");
         }
-       // printAll();
+        // printAll();
     }
-
+private void calculateVariance(double average){
+    double sum=0;
+    for(Chromosome chromosome : bestSolutions){
+        sum += Math.pow(chromosome.getFitnessFunctionResult() - average,2);
+    }
+    sum /= bestSolutions.size();
+    sum= 1d/sum;
+    System.out.print(sum + "\n");
+}
     /**
      * set next population as current calculate fitness function for each
      * solution calculate overall fitness function for population calculate
@@ -57,6 +70,7 @@ public class GA {
     private void algorithm() {
 
         currentPopulation = nextPopulation;
+
         this.newSolutions = new Chromosome[this.populationSize];
         this.currentPopulation.performCalculationsToRoulette(demandPeriodLength);
         int iteration = 0;
@@ -80,34 +94,49 @@ public class GA {
      */
     private void getBestFit() {
         bestSolution = null;
-        double bestFF = Double.NEGATIVE_INFINITY;
+
         double maximum = Double.NEGATIVE_INFINITY;
         for (Chromosome solution : currentPopulation.getSolutions()) {
+          //  System.out.println("best " + (1.0 / solution.getFitnessFunctionResult()));
+            int[] bestStockLevel = new int[solution.getGenes().length];
+            //System.out.println("best stock level ");
+            for (int i = 0; i < solution.getGenes().length; i++) {
+                bestStockLevel[i] = solution.getGenes()[i].getGeneIntValue();
+              //  System.out.print(bestStockLevel[i] + " ");
+            }
+            //System.out.println("");
             if (maximum < solution.getFitnessFunctionResult()) {
                 maximum = solution.getFitnessFunctionResult();
                 bestSolution = solution;
+
             }
         }
-       //System.out.println(1.0 / bestSolution.getFitnessFunctionResult());
+       // System.out.println("THE best " + (1.0 / bestSolution.getFitnessFunctionResult()));
+       // System.out.println("THE best " + (1.0 / bestSolution.getFitnessFunctionResult()));
+        bestSolutions.add(bestSolution);
+
 
     }
-    private double getAverage(){
+
+    private double getAverage() {
         double avg = 0;
         for (Chromosome solution : currentPopulation.getSolutions()) {
-           avg +=solution.getFitnessFunctionResult();
+            avg += 1d/solution.getFitnessFunctionResult();
         }
-        return (1.0/(avg/currentPopulation.getSolutions().length));
-    }
-public void printAll(){
-    for (Chromosome solution : currentPopulation.getSolutions()) {
-        System.out.println(1.0 / solution.getFitnessFunctionResult());
+        return avg / currentPopulation.getSolutions().length;
     }
 
-}
+    public void printAll() {
+        for (Chromosome solution : currentPopulation.getSolutions()) {
+            System.out.println(1.0 / solution.getFitnessFunctionResult());
+        }
+
+    }
+
     public int[] getBestSolution() {
         int[] bestStockLevel = new int[bestSolution.getGenes().length];
         for (int i = 0; i < bestSolution.getGenes().length; i++) {
-            bestStockLevel[i]=bestSolution.getGenes()[i].getGeneIntValue();
+            bestStockLevel[i] = bestSolution.getGenes()[i].getGeneIntValue();
             System.out.println(bestStockLevel[i]);
         }
         return bestStockLevel;

@@ -7,7 +7,7 @@ import java.util.Random;
  */
 public class GeneticOperator {
     private double mutationProbability = 0.3;
-    private double crossingProbability = 0.2;
+    private double crossingProbability = 0.4;
 
     public GeneticOperator() {
 
@@ -20,6 +20,7 @@ public class GeneticOperator {
 
     public Chromosome[] performGeneticOperation(int iteration, Population currentPopulation) {
         Random random = new Random();
+
         double randomValue = random.nextDouble();
         Chromosome[] chromosomeToInsert;
         if (randomValue < crossingProbability
@@ -37,6 +38,7 @@ public class GeneticOperator {
         return chromosomeToInsert;
     }
 
+
     /**
      * Crossing Choose two solutions using roulette method randomly choose entry
      * perform crossing
@@ -44,13 +46,15 @@ public class GeneticOperator {
      * @return array of two new solution, chromosome
      */
     private Chromosome[] crossing(Population currentPopulation) {
-
         Chromosome[] solutionsToCross = new Chromosome[2];
         for (int i = 0; i < solutionsToCross.length; i++) {
             solutionsToCross[i] = RouletteSelection.selectChromosomes(currentPopulation
                     .getSolutions());
+
+
         }
         Chromosome[] solutionsAfterCrossing = UniformCrossover.crossing(solutionsToCross);
+
         return solutionsAfterCrossing;
     }
 
@@ -62,8 +66,9 @@ public class GeneticOperator {
      * @return new solution
      */
     private Chromosome[] mutation(Population currentPopulation) {
-
         Chromosome solution = RouletteSelection.selectChromosomes(currentPopulation.getSolutions());
+
+
         Chromosome[] newSolution = new Chromosome[]{
                 new Chromosome()
         };
@@ -80,6 +85,8 @@ public class GeneticOperator {
             genes[i] = new Gene(gene, solution.getGenes()[i].getNode());
         }
         newSolution[0].setGenes(genes);
+
+
         return newSolution;
 
     }
@@ -99,6 +106,7 @@ public class GeneticOperator {
                 new Chromosome()
         };
         newSolution[0].setGenes(genes);
+
         return newSolution;
 
     }

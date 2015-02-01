@@ -31,6 +31,7 @@ public class Chromosome {
      */
     public void setDistributionFunction(double distributionFunction) {
         this.distributionFunction = distributionFunction;
+
     }
 
     /**
@@ -76,7 +77,7 @@ public class Chromosome {
     }
 
     public void setFitnessFunctionResult(double fitnessFunctionResult) {
-       // this.fitnessFunctionResult = fitnessFunctionResult;
+       this.fitnessFunctionResult = fitnessFunctionResult;
     }
 
 
