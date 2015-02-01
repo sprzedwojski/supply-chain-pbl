@@ -6,8 +6,8 @@ import java.util.Random;
  * Created by Marta on 2015-01-20.
  */
 public class GeneticOperator {
-    private double mutationProbability = 0.3;
-    private double crossingProbability = 0.4;
+    private double mutationProbability = 0.4;
+    private double crossingProbability = 0.3;
 
     public GeneticOperator() {
 
