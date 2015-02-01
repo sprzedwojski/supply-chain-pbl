@@ -2,6 +2,7 @@ package plotting;
 
 import com.panayotis.gnuplot.JavaPlot;
 import com.panayotis.gnuplot.plot.DataSetPlot;
+import com.panayotis.gnuplot.style.PlotColor;
 import com.panayotis.gnuplot.style.PlotStyle;
 import com.panayotis.gnuplot.style.Style;
 
@@ -37,7 +38,7 @@ public class Plotter {
     public void plotPoints(double[][] points, String title) {
         DataSetPlot dsp = new DataSetPlot(points);
         dsp.setTitle(title);
-        PlotStyle style = new PlotStyle(Style.POINTS);
+        PlotStyle style = new PlotStyle(Style.CANDLESTICKS);
         style.setPointSize(2);
         dsp.setPlotStyle(style);
         jp.addPlot(dsp);

@@ -13,6 +13,9 @@ public class Chromosome {
     private double fitnessFunctionResult;
     private double selectionProbality;
     private double distributionFunction;
+     public Chromosome(){
+
+     }
 
     /**
      * Getter

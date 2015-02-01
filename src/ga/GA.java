@@ -33,11 +33,18 @@ public class GA {
 
     public void runGA() {
         int count = 0;
-        while (count < 500) {
+        double averageFFDiff = Double.POSITIVE_INFINITY;
+        double averageFFCurrent = Double.POSITIVE_INFINITY;
+        double averageFFPrevious = Double.NEGATIVE_INFINITY;
+        while (Math.abs(averageFFPrevious-averageFFCurrent) >0.001) {
+            averageFFPrevious = averageFFCurrent;
             algorithm();
+            averageFFCurrent=getAverage();
             count++;
             getBestFit();
+           System.out.println(count+" "+Math.abs(averageFFPrevious-averageFFCurrent));
         }
+       // printAll();
     }
 
     /**
@@ -81,10 +88,22 @@ public class GA {
                 bestSolution = solution;
             }
         }
+       //System.out.println(1.0 / bestSolution.getFitnessFunctionResult());
 
-       // System.out.println(1.0 / bestSolution.getFitnessFunctionResult());
+    }
+    private double getAverage(){
+        double avg = 0;
+        for (Chromosome solution : currentPopulation.getSolutions()) {
+           avg +=solution.getFitnessFunctionResult();
+        }
+        return (1.0/(avg/currentPopulation.getSolutions().length));
+    }
+public void printAll(){
+    for (Chromosome solution : currentPopulation.getSolutions()) {
+        System.out.println(1.0 / solution.getFitnessFunctionResult());
     }
 
+}
     public int[] getBestSolution() {
         int[] bestStockLevel = new int[bestSolution.getGenes().length];
         for (int i = 0; i < bestSolution.getGenes().length; i++) {
