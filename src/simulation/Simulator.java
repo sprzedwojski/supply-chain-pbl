@@ -23,12 +23,14 @@ public class Simulator {
     static int populationSize = 200;
 	
     public static void main(String[] args) {
-        try {
 
+        try {
             //Creating adapter
             Adapter ad = new Adapter();
+            
             //Taking converted node list from the adapter
             List<Node> DCs = ad.ConvertNodes(args.length > 0 ? args[0] : "nodes.xml");
+            
             //taking converted edges list from the adapter
             List<Edge> Edges = ad.ConvertConnections(args.length > 1 ? args[1] : "connections.xml");
             
@@ -70,8 +72,18 @@ public class Simulator {
             		maxDelay = e.getDelay();
             }
             
-
-
+//            for(Node n : DCs) {
+//            	System.out.println("Node " + n.getId());
+//            	
+//            	for(Edge e : n.getIncomingEdges()) {
+//            		System.out.println("-- incoming: " + (e.getSender() != null ? e.getSender().getId() : "external") + " | to: " + e.getReceiver().getId());
+//            	}
+//            	
+//            	for(Edge e : n.getOutgoingEdges()) {
+//            		System.out.println("-- outgoing: " + e.getReceiver().getId() + " | from: " + (e.getSender() != null ? e.getSender().getId() : "external"));
+//            	}
+//            }
+            
             int periodLength = 0;
             
             for(Node dc : DCs) {
@@ -84,7 +96,7 @@ public class Simulator {
             Node[] nodes = DCs.toArray(new Node[0]);
             int maxInterval = 2*maxDemand*(maxDelay+1);
 
-            GA ga = new GA(populationSize, nodes, periodLength, maxInterval);
+            GA ga = new GA(populationSize, nodes, periodLength, 300);
             ga.runGA();
             
             int[] solutions = ga.getBestSolution();
@@ -96,11 +108,6 @@ public class Simulator {
                     nodes[j].calculateInventoryLevel(i);
                     nodes[j].calculateOnOrderInventory(i);
                     nodes[j].calculateOrderAmount(i);
-
-//                        System.out.println(i + ": inventory level " + nodes[j].getInventoryLevel(i));
-//                        System.out.println(i + ": on order inventory " + nodes[j].getOnOrderInventory(i));
-//                        System.out.println(i + ": order amount " + nodes[j].getOrderHistory(i) + "\n");
-
                 }
             }
 
@@ -111,11 +118,9 @@ public class Simulator {
             	totalCost += node.getCostFunction();
             }
 
-
             totalCost /= nodes.length;
 
-
-            System.out.println("total cost: " + totalCost);
+//            System.out.println("total cost: " + totalCost);
 
             if(args.length > 2 && args[2].equals("plot")) {
 	            for(Node node : nodes) {
@@ -125,8 +130,7 @@ public class Simulator {
 	                p.draw("Node " + node.getId());
 	            }
             }
-
-
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
