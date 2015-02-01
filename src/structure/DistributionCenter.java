@@ -22,9 +22,7 @@ public class DistributionCenter extends Node {
                               double holdingCost, double purchaseCost, double negativeStockLevelCost,
                               int periodLength) throws Exception {
         super();
-//        if (demand.length+1 != periodLength) {
-//            throw new Exception();
-//        }
+
         this.initialStockLevel = initialStockLevel;
 
         this.demand = demand;

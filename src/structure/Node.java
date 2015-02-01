@@ -172,9 +172,9 @@ public abstract class Node {
         return inventoryLevel;
     }
 
-//	public void setInventoryLevel(int[] inventoryLevel) {
-//		this.inventoryLevel = inventoryLevel;
-//	}
+	public void setInventoryLevel(int[] inventoryLevel) {
+		this.inventoryLevel = inventoryLevel;
+	}
 
     public int getBaseStockLevel() {
         return baseStockLevel;
@@ -192,9 +192,9 @@ public abstract class Node {
         return onOrderInventory;
     }
 
-//	public void setOnOrderInventory(int[] onOrderInventory) {
-//		this.onOrderInventory = onOrderInventory;
-//	}
+	public void setOnOrderInventory(int[] onOrderInventory) {
+		this.onOrderInventory = onOrderInventory;
+	}
 
     public double getHoldingCost() {
         return holdingCost;
@@ -223,9 +223,9 @@ public abstract class Node {
     public double getCostFunction() {
         return costFunction;
     }
-//	public void setOrderHistory(int[] orderHistory) {
-//		this.orderHistory = orderHistory;
-//	}
+	public void setOrderHistory(int[] orderHistory) {
+		this.orderHistory = orderHistory;
+	}
 
 	public double getNegativeStockLevelCost() {
 		return negativeStockLevelCost;

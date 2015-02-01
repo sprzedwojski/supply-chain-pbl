@@ -23,39 +23,12 @@ public class Simulator {
     static int populationSize = 200;
 	
     public static void main(String[] args) {
-
-        //int[] demand = {10, 5, 15, 20, 45, 10, 5, 10, 50, 35, 20, 10, 5, 3, 14, 17, 29, 0, 5, 3, 18, 46, 12};
-        //int[] demand = {30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30};
-        //int[] demand = {5, 5, 10, 10, 15, 15, 20, 20, 30, 30, 40, 50, 20, 10, 5};
-
-    	
-    	
-        //DistributionCenter cd1 = null;
         try {
-            //Node[] nodes = new Node[2];
-            /*cd1 = new DistributionCenter(demand, 150, 150, 10, 30, 100, demand.length + 1);
-            DistributionCenter cd2 = new DistributionCenter(150, 150, 2, 5, 50, demand.length + 1);
 
-            Edge edge21 = new Edge(0.6, 2, cd2, cd1);
-
-            Edge edgeExt2 = new Edge(1, 2, null, cd2);
-            Edge edgeExt1 = new Edge(0.4, 1, null, cd1);
-            cd1.addIncomingEdge(edge21);
-            cd1.addIncomingEdge(edgeExt1);
-
-            cd2.addIncomingEdge(edgeExt2);
-            cd2.addOutgoingEdge(edge21);
-            nodes[0] = cd1;
-            nodes[1] = cd2;
-*/
             //Creating adapter
             Adapter ad = new Adapter();
             //Taking converted node list from the adapter
             List<Node> DCs = ad.ConvertNodes(args.length > 0 ? args[0] : "nodes.xml");
-            //Setting nodes
-            //cd1 = DCs.get(0);
-            //DistributionCenter cd2 = DCs.get(1);
-            
             //taking converted edges list from the adapter
             List<Edge> Edges = ad.ConvertConnections(args.length > 1 ? args[1] : "connections.xml");
             
@@ -76,8 +49,7 @@ public class Simulator {
             for(Node n : toRemove) {
             	DCs.remove(n);
             }
-            
-            // FIXME temporary
+
             int k=1;
             for(Node dc : DCs) {
             	dc.setId(k);
@@ -98,26 +70,8 @@ public class Simulator {
             		maxDelay = e.getDelay();
             }
             
-            for(Node n : DCs) {
-            	System.out.println("Node " + n.getId());
-            	
-            	for(Edge e : n.getIncomingEdges()) {
-            		System.out.println("-- incoming: " + (e.getSender() != null ? e.getSender().getId() : "external") + " | to: " + e.getReceiver().getId());
-            	}
-            	
-            	for(Edge e : n.getOutgoingEdges()) {
-            		System.out.println("-- outgoing: " + e.getReceiver().getId() + " | from: " + (e.getSender() != null ? e.getSender().getId() : "external"));
-            	}
-            }
-            
-            /*cd1.addIncomingEdge(Edges.get(0));
-            cd1.addIncomingEdge(Edges.get(1));
-            cd2.addIncomingEdge(Edges.get(2));
-            cd2.addOutgoingEdge(Edges.get(0));
-            nodes[0]=cd1;
-            nodes[1]=cd2;*/
-            
-            //int[] demand = null;
+
+
             int periodLength = 0;
             
             for(Node dc : DCs) {
@@ -130,7 +84,7 @@ public class Simulator {
             Node[] nodes = DCs.toArray(new Node[0]);
             int maxInterval = 2*maxDemand*(maxDelay+1);
 
-            GA ga = new GA(populationSize, nodes, periodLength, 300);
+            GA ga = new GA(populationSize, nodes, periodLength, maxInterval);
             ga.runGA();
             
             int[] solutions = ga.getBestSolution();
@@ -152,28 +106,14 @@ public class Simulator {
 
             double totalCost = 0.0;
 
-//            System.out.println("--------------");
-
             for(Node node : nodes) {
             	node.calculateCostFunction();
             	totalCost += node.getCostFunction();
-
-//            	System.out.println(node.getBaseStockLevel()); // printowane juz w GA
             }
 
-//            System.out.println("--------------");
 
             totalCost /= nodes.length;
 
-            //cd1.calculateCostFunction();
-            //cd2.calculateCostFunction();
-            //double c = cd1.getCostFunction() + cd2.getCostFunction();
-
-            //In case of saving modified nodes, re-setting nodes.
-            //DCs.set(0, cd1);
-            //DCs.set(1, cd2);
-            //Saving calculated nodes.
-            //ad.ConvertBackendNodes();
 
             System.out.println("total cost: " + totalCost);
 
@@ -185,16 +125,7 @@ public class Simulator {
 	                p.draw("Node " + node.getId());
 	            }
             }
-            
-            /*Plotter p1 = new Plotter();
-            p1.plotPointsWithIntegerXFromZero(cd1.getInventoryLevel(), "Inventory level y(k)");
-            p1.plotPointsWithIntegerXFromZero(cd1.getOrderHistory(), "Order history u(k)");
-            p1.draw("Node 1");
-            
-            Plotter p2 = new Plotter();
-            p2.plotPointsWithIntegerXFromZero(cd2.getInventoryLevel(), "Inventory level y(k)");
-            p2.plotPointsWithIntegerXFromZero(cd2.getOrderHistory(), "Order history u(k)");
-            p2.draw("Node 2");*/
+
 
         } catch (Exception e) {
             e.printStackTrace();
