@@ -50,13 +50,13 @@ public class Simulator {
             //Creating adapter
             Adapter ad = new Adapter();
             //Taking converted node list from the adapter
-            List<Node> DCs = ad.ConvertNodes(args.length > 0 ? args[0] : "nodes.xml");
+            List<Node> DCs = ad.ConvertNodes(args.length > 0 ? args[0] : "node3.xml");
             //Setting nodes
             //cd1 = DCs.get(0);
             //DistributionCenter cd2 = DCs.get(1);
             
             //taking converted edges list from the adapter
-            List<Edge> Edges = ad.ConvertConnections(args.length > 1 ? args[1] : "connections.xml");
+            List<Edge> Edges = ad.ConvertConnections(args.length > 1 ? args[1] : "connection3.xml");
             
             //remove already unnecessary external nodes & searching for max demand value
             List<Node> toRemove = new ArrayList<Node>();
@@ -64,9 +64,11 @@ public class Simulator {
             	if(n instanceof ExternalNode) {
             		toRemove.add(n);
             	} else {
-            		for(int d : n.getDemand()) {
-            			if(d > maxDemand)
-            				maxDemand = d;
+            		if(n.getDemand() != null) {
+	            		for(int d : n.getDemand()) {
+	            			if(d > maxDemand)
+	            				maxDemand = d;
+	            		}
             		}
             	}
             }
