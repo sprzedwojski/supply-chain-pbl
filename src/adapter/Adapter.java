@@ -9,12 +9,13 @@ import javax.xml.bind.JAXBException;
 
 import structure.DistributionCenter;
 import structure.Edge;
+import structure.ExternalNode;
 import structure.Node;
 
 public class Adapter {
 
 	List<FrontNode> NodeList = new ArrayList<FrontNode>();
-	List<DistributionCenter> DCs = new ArrayList<DistributionCenter>();
+	List<Node> DCs = new ArrayList<Node>();
 	int maxDemandLenght = 0;
 
 	/*
@@ -23,7 +24,7 @@ public class Adapter {
 	 * nodes and converts it to Back-end nodes. MaxDemand is calculatefd by
 	 * simple min/max function, and then used in DistributionCenter constructor.
 	 */
-	public List<DistributionCenter> ConvertNodes(String nodesXmlFilename) throws Exception {
+	public List<Node> ConvertNodes(String nodesXmlFilename) throws Exception {
 		// Importing FrontNodes list
 		try {
 			NodeList = JAXBXMLHandler.unmarshalNode(new File(nodesXmlFilename));
@@ -34,13 +35,17 @@ public class Adapter {
 		maxDemandLenght = maxDemandLength(NodeList);
 		// Creating Backend-Node list.
 		for (FrontNode node : NodeList) {
-			// Node without demand
-			if (node.getDemand() != null) {
+			// External node
+			if(node.getType() == 0) {
+				DCs.add(new ExternalNode());
+			}
+			// Node with demand
+			else if (node.getDemand() != null) {
 				DCs.add(new DistributionCenter(node.getDemand(), node
 						.getBaseStockLevel(), node.getInitialStockLevel(), node
 						.getHoldingCost(), node.getPurchaseCost(), node
 						.getNegativeStockLevelCost(), maxDemandLenght + 1));
-			}// Node with demand
+			}// Node without demand
 			else {
 				DCs.add(new DistributionCenter(node.getBaseStockLevel(), node
 						.getInitialStockLevel(), node.getHoldingCost(), node

@@ -2,11 +2,12 @@ package simulation;
 
 import ga.GA;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import plotting.Plotter;
-import structure.DistributionCenter;
 import structure.Edge;
+import structure.ExternalNode;
 import structure.Node;
 import adapter.Adapter;
 
@@ -17,12 +18,17 @@ import adapter.Adapter;
  */
 public class Simulator {
 
+	static int maxDemand=0;
+	static int maxDelay=0;
+	
     public static void main(String[] args) {
 
         //int[] demand = {10, 5, 15, 20, 45, 10, 5, 10, 50, 35, 20, 10, 5, 3, 14, 17, 29, 0, 5, 3, 18, 46, 12};
         //int[] demand = {30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30};
         //int[] demand = {5, 5, 10, 10, 15, 15, 20, 20, 30, 30, 40, 50, 20, 10, 5};
 
+    	
+    	
         //DistributionCenter cd1 = null;
         try {
             //Node[] nodes = new Node[2];
@@ -44,28 +50,60 @@ public class Simulator {
             //Creating adapter
             Adapter ad = new Adapter();
             //Taking converted node list from the adapter
-            List<DistributionCenter> DCs = ad.ConvertNodes(args[0] != null ? args[0] : "nodes.xml");
+            List<Node> DCs = ad.ConvertNodes(args.length > 0 ? args[0] : "nodes.xml");
             //Setting nodes
             //cd1 = DCs.get(0);
             //DistributionCenter cd2 = DCs.get(1);
             
+            //taking converted edges list from the adapter
+            List<Edge> Edges = ad.ConvertConnections(args.length > 1 ? args[1] : "connections.xml");
+            
+            //remove already unnecessary external nodes & searching for max demand value
+            List<Node> toRemove = new ArrayList<Node>();
+            for(Node n : DCs) {
+            	if(n instanceof ExternalNode) {
+            		toRemove.add(n);
+            	} else {
+            		for(int d : n.getDemand()) {
+            			if(d > maxDemand)
+            				maxDemand = d;
+            		}
+            	}
+            }
+            for(Node n : toRemove) {
+            	DCs.remove(n);
+            }
             
             // FIXME temporary
             int k=1;
-            for(DistributionCenter dc : DCs) {
+            for(Node dc : DCs) {
             	dc.setId(k);
             	k++;
             }
             
-            //taking converted edges list from the adapter
-            List<Edge> Edges = ad.ConvertConnections(args[1] != null ? args[1] : "connections.xml");
-            
+            // Allocating edges to nodes & searching for max delay
             for(Edge e : Edges) {
             	if(e.getReceiver() != null) {
-            		DCs.get(e.getReceiver().getId() - 1).addIncomingEdge(e);
+            		DCs.get(e.getReceiver().getId()-1).addIncomingEdge(e);
             	}
             	if(e.getSender() != null) {
-            		DCs.get(e.getSender().getId() - 1).addOutgoingEdge(e);
+            		DCs.get(e.getSender().getId()-1).addOutgoingEdge(e);
+            	}
+            	
+            	// searching for max delay
+            	if(e.getDelay() > maxDelay) 
+            		maxDelay = e.getDelay();
+            }
+            
+            for(Node n : DCs) {
+            	System.out.println("Node " + n.getId());
+            	
+            	for(Edge e : n.getIncomingEdges()) {
+            		System.out.println("-- incoming: " + (e.getSender() != null ? e.getSender().getId() : "external") + " | to: " + e.getReceiver().getId());
+            	}
+            	
+            	for(Edge e : n.getOutgoingEdges()) {
+            		System.out.println("-- outgoing: " + e.getReceiver().getId() + " | from: " + (e.getSender() != null ? e.getSender().getId() : "external"));
             	}
             }
             
@@ -79,7 +117,7 @@ public class Simulator {
             //int[] demand = null;
             int periodLength = 0;
             
-            for(DistributionCenter dc : DCs) {
+            for(Node dc : DCs) {
             	if(dc.getDemand() != null) {
             		periodLength = dc.getDemand().length+1;
             		break;
@@ -101,24 +139,24 @@ public class Simulator {
                     nodes[j].calculateOnOrderInventory(i);
                     nodes[j].calculateOrderAmount(i);
 
-                    System.out.println(i + ": inventory level " + nodes[j].getInventoryLevel(i));
+                    /*System.out.println(i + ": inventory level " + nodes[j].getInventoryLevel(i));
                     System.out.println(i + ": on order inventory " + nodes[j].getOnOrderInventory(i));
-                    System.out.println(i + ": order amount " + nodes[j].getOrderHistory(i) + "\n");
+                    System.out.println(i + ": order amount " + nodes[j].getOrderHistory(i) + "\n");*/
                 }
             }
             
             double totalCost = 0.0;
             
-            System.out.println("--------------");
+//            System.out.println("--------------");
             
             for(Node node : nodes) {
             	node.calculateCostFunction();
             	totalCost += node.getCostFunction();
             	
-            	System.out.println(node.getBaseStockLevel());
+//            	System.out.println(node.getBaseStockLevel()); // printowane juz w GA
             }
             
-            System.out.println("--------------");
+//            System.out.println("--------------");
             
             totalCost /= nodes.length;
             
@@ -134,11 +172,13 @@ public class Simulator {
             
             System.out.println("total cost: " + totalCost);
             
-            for(Node node : nodes) {
-                Plotter p = new Plotter();
-                p.plotPointsWithIntegerXFromZero(node.getInventoryLevel(), "Inventory level y(k)");
-                p.plotPointsWithIntegerXFromZero(node.getOrderHistory(), "Order history u(k)");
-                p.draw("Node " + node.getId());
+            if(args.length > 2 && args[2].equals("plot")) {
+	            for(Node node : nodes) {
+	                Plotter p = new Plotter();
+	                p.plotPointsWithIntegerXFromZero(node.getInventoryLevel(), "Inventory level y(k)");
+	                p.plotPointsWithIntegerXFromZero(node.getOrderHistory(), "Order history u(k)");
+	                p.draw("Node " + node.getId());
+	            }
             }
             
             /*Plotter p1 = new Plotter();

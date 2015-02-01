@@ -70,9 +70,9 @@ public class FrontNode {
 
 	// constructors
 	public FrontNode() {
-		System.out
+		/*System.out
 				.println("You seem to have called a default constructor - you sure what you are doing?");
-		System.out.println("By the way no node was created!");
+		System.out.println("By the way no node was created!");*/
 	}
 
 	public FrontNode(String _name, int _type) {

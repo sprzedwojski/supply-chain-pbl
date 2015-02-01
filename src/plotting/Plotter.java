@@ -37,7 +37,7 @@ public class Plotter {
     public void plotPoints(double[][] points, String title) {
         DataSetPlot dsp = new DataSetPlot(points);
         dsp.setTitle(title);
-        PlotStyle style = new PlotStyle(Style.POINTS);
+        PlotStyle style = new PlotStyle(Style.LINES);
         style.setPointSize(2);
         dsp.setPlotStyle(style);
         jp.addPlot(dsp);

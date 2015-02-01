@@ -55,10 +55,14 @@ public abstract class Node {
 
     protected int initialStockLevel;
 
-    protected List<Edge> outgoingEdges = new ArrayList<Edge>();
-    protected List<Edge> incomingEdges = new ArrayList<Edge>();
+    protected List<Edge> outgoingEdges;
+    protected List<Edge> incomingEdges;
 
-
+    public Node() {
+        outgoingEdges = new ArrayList<Edge>();
+        incomingEdges = new ArrayList<Edge>();
+    }
+    
     public int calculateInventoryLevel(int periodIndex) {
         int incomingOrders = getAllIncomingOrders(periodIndex);
         int outgoingOrders = getAllOutgoingOrders(periodIndex);
@@ -237,6 +241,22 @@ public abstract class Node {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public List<Edge> getOutgoingEdges() {
+		return outgoingEdges;
+	}
+
+	public void setOutgoingEdges(List<Edge> outgoingEdges) {
+		this.outgoingEdges = outgoingEdges;
+	}
+
+	public List<Edge> getIncomingEdges() {
+		return incomingEdges;
+	}
+
+	public void setIncomingEdges(List<Edge> incomingEdges) {
+		this.incomingEdges = incomingEdges;
 	}
 
 
