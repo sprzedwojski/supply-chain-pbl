@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_run_jar" name="Create Runnable Jar for Project PBL">
+    <!--this file was created by Eclipse Runnable JAR Export Wizard-->
+    <!--ANT 1.7 is required                                        -->
+    <target name="create_run_jar">
+        <jar destfile="/home/szymon/workspace/JarTest/simulation.jar" filesetmanifest="mergewithoutmain">
+            <manifest>
+                <attribute name="Main-Class" value="simulation.Simulator"/>
+                <attribute name="Class-Path" value="."/>
+            </manifest>
+            <fileset dir="/home/szymon/workspace/PBL/bin"/>
+            <zipfileset excludes="META-INF/*.SF" src="/home/szymon/workspace/PBL/lib/JavaPlot.jar"/>
+        </jar>
+    </target>
+</project>

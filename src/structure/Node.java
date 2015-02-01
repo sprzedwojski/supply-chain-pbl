@@ -5,6 +5,8 @@ import java.util.List;
 
 public abstract class Node {
 
+	protected int id;
+	
     /**
      * Array holding the values of the demand for this node
      * for each day of the considered time period.
@@ -227,6 +229,14 @@ public abstract class Node {
 
 	public void setNegativeStockLevelCost(double negativeStockLevelCost) {
 		this.negativeStockLevelCost = negativeStockLevelCost;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 
