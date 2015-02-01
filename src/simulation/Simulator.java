@@ -96,7 +96,7 @@ public class Simulator {
             Node[] nodes = DCs.toArray(new Node[0]);
             int maxInterval = 2*maxDemand*(maxDelay+1);
 
-            GA ga = new GA(populationSize, nodes, periodLength, 300);
+            GA ga = new GA(populationSize, nodes, periodLength, maxInterval);
             ga.runGA();
             
             int[] solutions = ga.getBestSolution();
