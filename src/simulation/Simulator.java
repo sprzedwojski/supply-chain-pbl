@@ -20,6 +20,7 @@ public class Simulator {
 
 	static int maxDemand=0;
 	static int maxDelay=0;
+    static int populationSize = 200;
 	
     public static void main(String[] args) {
 
@@ -64,10 +65,12 @@ public class Simulator {
             	if(n instanceof ExternalNode) {
             		toRemove.add(n);
             	} else {
-            		for(int d : n.getDemand()) {
-            			if(d > maxDemand)
-            				maxDemand = d;
-            		}
+                    if(n.getDemand()!=null) {
+                        for (int d : n.getDemand()) {
+                            if (d > maxDemand)
+                                maxDemand = d;
+                        }
+                    }
             	}
             }
             for(Node n : toRemove) {
@@ -125,8 +128,9 @@ public class Simulator {
             }
             
             Node[] nodes = DCs.toArray(new Node[0]);
-            
-            GA ga = new GA(200, nodes, periodLength, 300);
+            int maxInterval = 2*maxDemand*(maxDelay+1);
+
+            GA ga = new GA(populationSize, nodes, periodLength, 300);
             ga.runGA();
             
             int[] solutions = ga.getBestSolution();
@@ -139,39 +143,40 @@ public class Simulator {
                     nodes[j].calculateOnOrderInventory(i);
                     nodes[j].calculateOrderAmount(i);
 
-                    /*System.out.println(i + ": inventory level " + nodes[j].getInventoryLevel(i));
-                    System.out.println(i + ": on order inventory " + nodes[j].getOnOrderInventory(i));
-                    System.out.println(i + ": order amount " + nodes[j].getOrderHistory(i) + "\n");*/
+//                        System.out.println(i + ": inventory level " + nodes[j].getInventoryLevel(i));
+//                        System.out.println(i + ": on order inventory " + nodes[j].getOnOrderInventory(i));
+//                        System.out.println(i + ": order amount " + nodes[j].getOrderHistory(i) + "\n");
+
                 }
             }
-            
+
             double totalCost = 0.0;
-            
+
 //            System.out.println("--------------");
-            
+
             for(Node node : nodes) {
             	node.calculateCostFunction();
             	totalCost += node.getCostFunction();
-            	
+
 //            	System.out.println(node.getBaseStockLevel()); // printowane juz w GA
             }
-            
+
 //            System.out.println("--------------");
-            
+
             totalCost /= nodes.length;
-            
+
             //cd1.calculateCostFunction();
             //cd2.calculateCostFunction();
             //double c = cd1.getCostFunction() + cd2.getCostFunction();
-            
+
             //In case of saving modified nodes, re-setting nodes.
             //DCs.set(0, cd1);
             //DCs.set(1, cd2);
             //Saving calculated nodes.
             //ad.ConvertBackendNodes();
-            
+
             System.out.println("total cost: " + totalCost);
-            
+
             if(args.length > 2 && args[2].equals("plot")) {
 	            for(Node node : nodes) {
 	                Plotter p = new Plotter();

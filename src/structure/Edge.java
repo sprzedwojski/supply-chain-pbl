@@ -28,7 +28,7 @@ public class Edge {
 
     public Edge(double fraction, int delay, Node sender, Node receiver) {
         super();
-        this.fraction = fraction;
+        this.fraction = fraction/100d;
         this.delay = delay;
         this.sender = sender;
         this.receiver = receiver;
