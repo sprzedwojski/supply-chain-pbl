@@ -12,7 +12,7 @@ public class Plotter {
         jp = new JavaPlot();
     }
 
-    public void plotPointsWithIntegerXFromZero(double[] points, String title) {
+    public void plotPointsWithIntegerXFromZero(double[] points, String title, Style style) {
         double[][] corrected = new double[points.length][2];
 
         for (int i = 0; i < points.length; i++) {
@@ -20,10 +20,10 @@ public class Plotter {
             corrected[i][1] = points[i];
         }
 
-        plotPoints(corrected, title);
+        plotPoints(corrected, title, style);
     }
 
-    public void plotPointsWithIntegerXFromZero(int[] points, String title) {
+    public void plotPointsWithIntegerXFromZero(int[] points, String title, Style style) {
         double[][] corrected = new double[points.length][2];
 
         for (int i = 0; i < points.length; i++) {
@@ -31,13 +31,13 @@ public class Plotter {
             corrected[i][1] = points[i];
         }
 
-        plotPoints(corrected, title);
+        plotPoints(corrected, title, style);
     }
 
-    public void plotPoints(double[][] points, String title) {
+    public void plotPoints(double[][] points, String title, Style customStyle) {
         DataSetPlot dsp = new DataSetPlot(points);
         dsp.setTitle(title);
-        PlotStyle style = new PlotStyle(Style.LINES);
+        PlotStyle style = new PlotStyle(customStyle == null ? Style.LINES : customStyle);
         style.setPointSize(2);
         dsp.setPlotStyle(style);
         jp.addPlot(dsp);

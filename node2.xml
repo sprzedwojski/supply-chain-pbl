@@ -1,91 +1,59 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <nodes>
     <node>
-        <name>Node1</name>
+        <name>0</name>
+        <type>0</type>
+        <id>0</id>
+        <periodLength>0</periodLength>
+        <baseStockLevel>0</baseStockLevel>
+        <holdingCost>0.0</holdingCost>
+        <purchaseCost>0.0</purchaseCost>
+        <negativeStockLevelCost>0.0</negativeStockLevelCost>
+        <costFunction>0.0</costFunction>
+        <initialStockLevel>0</initialStockLevel>
+    </node>
+    <node>
+        <name>cd1</name>
         <type>2</type>
         <id>1</id>
         <periodLength>0</periodLength>
+        <demand>40</demand>
+        <demand>50</demand>
+        <demand>60</demand>
+        <demand>10</demand>
+        <demand>20</demand>
+        <demand>20</demand>
+        <demand>20</demand>
+        <demand>30</demand>
+        <demand>50</demand>
+        <demand>60</demand>
+        <demand>40</demand>
+        <demand>30</demand>
+        <demand>20</demand>
+        <demand>10</demand>
+        <demand>20</demand>
+        <demand>20</demand>
+        <demand>20</demand>
+        <demand>20</demand>
+        <demand>20</demand>
+        <demand>20</demand>
         <baseStockLevel>0</baseStockLevel>
-        <holdingCost>5.0</holdingCost>
-        <purchaseCost>30.0</purchaseCost>
-        <negativeStockLevelCost>100.0</negativeStockLevelCost>
+        <holdingCost>10.0</holdingCost>
+        <purchaseCost>40.0</purchaseCost>
+        <negativeStockLevelCost>120.0</negativeStockLevelCost>
         <costFunction>0.0</costFunction>
-        <initialStockLevel>100</initialStockLevel>
+        <initialStockLevel>20</initialStockLevel>
     </node>
     <node>
-        <name>Node2</name>
+        <name>cd2</name>
         <type>2</type>
         <id>2</id>
         <periodLength>0</periodLength>
         <baseStockLevel>0</baseStockLevel>
-        <holdingCost>5.0</holdingCost>
-        <purchaseCost>50.0</purchaseCost>
-        <negativeStockLevelCost>100.0</negativeStockLevelCost>
+        <holdingCost>20.0</holdingCost>
+        <purchaseCost>60.0</purchaseCost>
+        <negativeStockLevelCost>150.0</negativeStockLevelCost>
         <costFunction>0.0</costFunction>
-        <initialStockLevel>60</initialStockLevel>
-    </node>
-    <node>
-        <name>Node3</name>
-        <type>2</type>
-        <id>3</id>
-        <periodLength>0</periodLength>
-        <demand>30</demand>
-		<demand>30</demand>
-		<demand>30</demand>
-		<demand>30</demand>
-		<demand>30</demand>
-		<demand>30</demand>
-		<demand>30</demand>
-		<demand>30</demand>
-		<demand>30</demand>
-		<demand>30</demand>
-        <demand>30</demand>
-		<demand>30</demand>
-		<demand>30</demand>
-		<demand>30</demand>
-		<demand>30</demand>
-		<demand>30</demand>
-		<demand>30</demand>
-		<demand>30</demand>
-		<demand>30</demand>
-		<demand>30</demand>
-        <demand>30</demand>
-		<demand>30</demand>
-		<demand>30</demand>
-		<demand>30</demand>
-		<demand>30</demand>
-		<demand>30</demand>
-		<demand>30</demand>
-		<demand>30</demand>
-		<demand>30</demand>
-		<demand>30</demand>
-        <demand>30</demand>
-		<demand>30</demand>
-		<demand>30</demand>
-		<demand>30</demand>
-		<demand>30</demand>
-		<demand>30</demand>
-		<demand>30</demand>
-		<demand>30</demand>
-		<demand>30</demand>
-		<demand>30</demand>
-        <baseStockLevel>0</baseStockLevel>
-        <holdingCost>5.0</holdingCost>
-        <purchaseCost>40.0</purchaseCost>
-        <negativeStockLevelCost>100.0</negativeStockLevelCost>
-        <costFunction>0.0</costFunction>
-        <initialStockLevel>70</initialStockLevel>
-    </node>
-    <node>
-        <name>Node4</name>
-        <type>2</type>
-        <id>4</id>
-        <periodLength>0</periodLength>
-        <baseStockLevel>0</baseStockLevel>
-        <holdingCost>5.0</holdingCost>
-        <purchaseCost>30.0</purchaseCost>
-        <negativeStockLevelCost>100.0</negativeStockLevelCost>
-        <costFunction>0.0</costFunction>
-        <initialStockLevel>90</initialStockLevel>
+        <initialStockLevel>30</initialStockLevel>
     </node>
 </nodes>

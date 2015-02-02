@@ -5,6 +5,8 @@ import ga.GA;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.panayotis.gnuplot.style.Style;
+
 import plotting.Plotter;
 import structure.Edge;
 import structure.ExternalNode;
@@ -125,9 +127,12 @@ public class Simulator {
             if(args.length > 2 && args[2].equals("plot")) {
 	            for(Node node : nodes) {
 	                Plotter p = new Plotter();
-	                p.plotPointsWithIntegerXFromZero(node.getInventoryLevel(), "Inventory level y(k)");
-	                p.plotPointsWithIntegerXFromZero(node.getOrderHistory(), "Order history u(k)");
-	                p.draw("Node " + node.getId());
+	                p.plotPointsWithIntegerXFromZero(node.getInventoryLevel(), "Inventory level y(k)", null);
+	                p.plotPointsWithIntegerXFromZero(node.getOrderHistory(), "Order history u(k)", null);
+	                if(node.getDemand() != null) {
+	                	p.plotPointsWithIntegerXFromZero(node.getOrderHistory(), "Demand", Style.POINTS);
+	                }
+	                p.draw("Node " + node.getId() + " | yd = " + node.getBaseStockLevel());
 	            }
             }
             
