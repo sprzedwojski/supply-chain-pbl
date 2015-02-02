@@ -6,7 +6,7 @@ import java.util.Random;
  * Created by Marta on 2015-01-20.
  */
 public class UniformCrossover {
-    private static final double RATIO = 0.6;
+    private static final double RATIO = 0.5;
     public static Chromosome[] crossing( Chromosome[] solutionsToCross ) {
 
 //
