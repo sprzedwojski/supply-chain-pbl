@@ -36,7 +36,6 @@ public class GA {
     public void runGA() {
         int count = 0;
         bestSolutions = new ArrayList<Chromosome>();
-        double averageFFDiff = Double.POSITIVE_INFINITY;
         double averageFFCurrent = Double.POSITIVE_INFINITY;
         double averageFFPrevious = Double.NEGATIVE_INFINITY;
         while (count < 1000) {
@@ -45,9 +44,7 @@ public class GA {
             averageFFCurrent = getAverage();
             count++;
             getBestFit();
-
         }
-
     }
 
     /**
